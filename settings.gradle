@@ -29,6 +29,7 @@ include "spring-web"
 include "spring-webflux"
 include "spring-webmvc"
 include "spring-websocket"
+include 'spring-debug'
 include "framework-bom"
 include "integration-tests"
 
@@ -36,5 +37,5 @@ rootProject.name = "spring"
 rootProject.children.each {project ->
 	project.buildFileName = "${project.name}.gradle"
 }
-include 'spring-debug'
+
 

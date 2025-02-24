@@ -12,5 +12,8 @@ public class Main {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring-test.xml");
 		Person  p = applicationContext.getBean(Person.class);
 		System.out.println(p.name);
+
+
 	}
+
 }

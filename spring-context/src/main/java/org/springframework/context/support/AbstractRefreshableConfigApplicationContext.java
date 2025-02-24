@@ -74,10 +74,13 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 * <p>If not set, the implementation may use a default as appropriate.
 	 */
 	public void setConfigLocations(@Nullable String... locations) {
+		// 保存xml文件路径
+		// 这里可以设置多个xml文件的路径，依次解析路径并保存
 		if (locations != null) {
 			Assert.noNullElements(locations, "Config locations must not be null");
 			this.configLocations = new String[locations.length];
 			for (int i = 0; i < locations.length; i++) {
+				// 同时对路径中的占位符进行替换
 				this.configLocations[i] = resolvePath(locations[i]).trim();
 			}
 		}
@@ -122,6 +125,9 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 * @see org.springframework.core.env.Environment#resolveRequiredPlaceholders(String)
 	 */
 	protected String resolvePath(String path) {
+		// 这里对xml的路径进行解析，主要是将环境变量的值进行代换
+		// 例如 “spring-${username}"
+		// 现获取环境，然后进行替换
 		return getEnvironment().resolveRequiredPlaceholders(path);
 	}
 

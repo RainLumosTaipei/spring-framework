@@ -568,6 +568,7 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 
 	@Override
 	public String resolveRequiredPlaceholders(String text) throws IllegalArgumentException {
+		// 替换路径中的环境变量占位符
 		return this.propertyResolver.resolveRequiredPlaceholders(text);
 	}
 

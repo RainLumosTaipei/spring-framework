@@ -50,7 +50,7 @@ import org.springframework.util.Assert;
  * @see GenericApplicationContext
  */
 public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContext {
-
+	// 此处加载xml文件
 	@Nullable
 	private Resource[] configResources;
 
@@ -137,9 +137,14 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	public ClassPathXmlApplicationContext(
 			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
 			throws BeansException {
-
+		// 这里调用父类初始化，完成了很多属性的设置
+		// 包括environment，路径解析器等
 		super(parent);
+		// 这里的configLocations即为传入的xml文件路径
+		// 保存xml文件路径
 		setConfigLocations(configLocations);
+		// 刷新容器，开始进行一系列操作
+		// 入口函数
 		if (refresh) {
 			refresh();
 		}
