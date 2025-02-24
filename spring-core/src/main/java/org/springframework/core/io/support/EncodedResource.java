@@ -16,17 +16,17 @@
 
 package org.springframework.core.io.support;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
 /**
  * Holder that combines a {@link Resource} descriptor with a specific encoding
@@ -43,7 +43,7 @@ import org.springframework.util.ObjectUtils;
  * @see java.nio.charset.Charset
  */
 public class EncodedResource implements InputStreamSource {
-
+	// 添加了编码属性
 	private final Resource resource;
 
 	@Nullable

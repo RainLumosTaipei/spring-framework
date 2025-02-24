@@ -16,8 +16,6 @@
 
 package org.springframework.context.support;
 
-import java.io.IOException;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.ResourceEntityResolver;
@@ -25,6 +23,8 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.Nullable;
+
+import java.io.IOException;
 
 /**
  * Convenient base class for {@link org.springframework.context.ApplicationContext}
@@ -85,15 +85,19 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 
 		// Configure the bean definition reader with this context's
 		// resource loading environment.
-		// 设置 reader 的属性
+		// 设置 reader 的一些属性
+		// 设置环境是为了解析占位符代换
 		beanDefinitionReader.setEnvironment(this.getEnvironment());
 		beanDefinitionReader.setResourceLoader(this);
-		// 这个是 sax
+		// 这个是 sax 的类，此处设置xml配置解析器
 		beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
 
 		// Allow a subclass to provide custom initialization of the reader,
 		// then proceed with actually loading the bean definitions.
+		// 子类可以重写这部分方法
+		// 设置是否要对xml进行格式验证
 		initBeanDefinitionReader(beanDefinitionReader);
+		// 又是一个同名方法，需要分清
 		loadBeanDefinitions(beanDefinitionReader);
 	}
 
@@ -106,6 +110,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * @see org.springframework.beans.factory.xml.XmlBeanDefinitionReader#setDocumentReaderClass
 	 */
 	protected void initBeanDefinitionReader(XmlBeanDefinitionReader reader) {
+		// 设置是否要对xml进行格式验证
 		reader.setValidating(this.validating);
 	}
 
@@ -122,12 +127,18 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * @see #getResourcePatternResolver
 	 */
 	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansException, IOException {
+		// 读取配置文件
+		// 资源方式，大多数用不到
+		// 需要调用另一个ctor
 		Resource[] configResources = getConfigResources();
 		if (configResources != null) {
 			reader.loadBeanDefinitions(configResources);
 		}
+		// 字符串方式
 		String[] configLocations = getConfigLocations();
 		if (configLocations != null) {
+			// 同名方法
+			// string[] -> string -> resource[] -> resource -> encodedResource
 			reader.loadBeanDefinitions(configLocations);
 		}
 	}
